@@ -9,8 +9,7 @@ from prod import prodname
 
 #DB연결
 sid_m = 'XE'
-# host_m = '210.119.14.67'
-host_m = 'localhost'
+host_m = '210.119.14.67'
 port_m = 1521
 username_m = 'MINIPRO'
 password_m = '12345'
@@ -108,7 +107,7 @@ class MainWindow(QMainWindow):
         self.close()                       
         self.deleteLater()  
 
-# 제품조회창
+# 제품조회 창
 class ProdWindow(QDialog,QWidget): 
     def __init__(self):
         super(ProdWindow,self).__init__()
@@ -281,7 +280,7 @@ class ProdSubWindow(QDialog,QWidget):
             cursor = conn.cursor()
             query = '''
             SELECT *
-            FROM MINIPRO.DELIVERY
+            FROM MINIPRO.DELIVERY4
             '''
             cursor.execute(query)
             delivery = cursor.fetchall()  
@@ -298,7 +297,7 @@ class ProdSubWindow(QDialog,QWidget):
             cursor = conn.cursor()
             query = '''
             SELECT prod_name, prod_order, substr(to_char(prod_delivery, 'YYYY-MM-DD'), 1, 10), amount
-            FROM MINIPRO.DELIVERY
+            FROM MINIPRO.DELIVERY4
             WHERE PROD_DELIVERY = TO_date(:v_deliverydate , 'YYYY-MM-DD')
             '''
             cursor.execute(query, {'v_deliverydate': deliverydate})
@@ -327,7 +326,7 @@ class ProdSubWindow(QDialog,QWidget):
                 self.delivery.setItem(i, 2, QTableWidgetItem(str(prod_delivery)))
                 self.delivery.setItem(i, 3, QTableWidgetItem(str(amount)))  
 
-# 발주조회창
+# 발주조회 창
 class DeliveryWindow(QDialog,QWidget):
     def __init__(self):
         super(DeliveryWindow,self).__init__()
@@ -432,7 +431,7 @@ class DeliveryWindow(QDialog,QWidget):
             cursor = conn.cursor()
             query = '''
             SELECT prod_name, prod_order, substr(to_char(prod_delivery, 'YYYY-MM-DD'),1 , 10), amount
-            FROM MINIPRO.DELIVERY
+            FROM MINIPRO.DELIVERY4
             '''
             cursor.execute(query)
             delivery = cursor.fetchall() 
@@ -453,7 +452,7 @@ class DeliveryWindow(QDialog,QWidget):
             cursor = conn.cursor()
             query = '''
             SELECT *
-                FROM MINIPRO.DELIVERY
+                FROM MINIPRO.DELIVERY4
               WHERE prod_name = :v_name 
             '''
             cursor.execute(query, {'v_name': name})
@@ -479,7 +478,7 @@ class DeliveryWindow(QDialog,QWidget):
             conn = oci.connect(f'{username_m}/{password_m}@{host_m}:{port_m}/{sid_m}')
             cursor = conn.cursor()
             query = '''
-            INSERT INTO MINIPRO.DELIVERY
+            INSERT INTO MINIPRO.DELIVERY4
               (prod_name,prod_order,prod_delivery,amount)
            VALUES (:v_prod_name,trunc(sysdate),trunc(sysdate+3),:v_amount)
             '''
@@ -487,7 +486,7 @@ class DeliveryWindow(QDialog,QWidget):
             conn.commit()  
             query = '''
             SELECT prod_name, prod_order, to_char(prod_delivery, 'YYYY-MM-DD'), amount
-            FROM MINIPRO.delivery
+            FROM MINIPRO.delivery4
             WHERE prod_name = :v_prod_name
             '''
             cursor.execute(query, {'v_prod_name': prod_name})
@@ -513,7 +512,7 @@ class DeliveryWindow(QDialog,QWidget):
             conn = oci.connect(f'{username_m}/{password_m}@{host_m}:{port_m}/{sid_m}')
             cursor = conn.cursor()
             query = '''
-            UPDATE MINIPRO.DELIVERY SET
+            UPDATE MINIPRO.DELIVERY4 SET
                   amount = :v_amount
                 , prod_order = sysdate 
                 , prod_delivery = sysdate + 3
@@ -535,7 +534,7 @@ class DeliveryWindow(QDialog,QWidget):
         try:
             conn.begin() 
             query = '''
-                    UPDATE MINIPRO.DELIVERY SET
+                    UPDATE MINIPRO.DELIVERY4 SET
                            amount = null
                         , prod_order = null
                         , prod_delivery = null
@@ -559,7 +558,7 @@ class DeliveryWindow(QDialog,QWidget):
             for j, value in enumerate(row):
                 self.delivery.setItem(i, j, QTableWidgetItem(str(value)))
 
-# 판매화면창
+# 판매 화면 창
 class HistoryWindow(QDialog, QWidget):
     def __init__(self):
         super(HistoryWindow, self).__init__()
