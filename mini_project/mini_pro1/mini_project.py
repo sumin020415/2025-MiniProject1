@@ -9,7 +9,8 @@ from prod import prodname
 
 #DB연결
 sid_m = 'XE'
-host_m = '210.119.14.67'
+# host_m = '210.119.14.67'
+host_m = 'localhost'
 port_m = 1521
 username_m = 'MINIPRO'
 password_m = '12345'
