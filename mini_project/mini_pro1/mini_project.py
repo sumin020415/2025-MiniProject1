@@ -108,7 +108,7 @@ class MainWindow(QMainWindow):
         self.close()                       
         self.deleteLater()  
 
-# 제품조회 창
+# 제품조회창
 class ProdWindow(QDialog,QWidget): 
     def __init__(self):
         super(ProdWindow,self).__init__()
@@ -327,7 +327,7 @@ class ProdSubWindow(QDialog,QWidget):
                 self.delivery.setItem(i, 2, QTableWidgetItem(str(prod_delivery)))
                 self.delivery.setItem(i, 3, QTableWidgetItem(str(amount)))  
 
-# 발주조회 창
+# 발주조회창
 class DeliveryWindow(QDialog,QWidget):
     def __init__(self):
         super(DeliveryWindow,self).__init__()
@@ -559,7 +559,7 @@ class DeliveryWindow(QDialog,QWidget):
             for j, value in enumerate(row):
                 self.delivery.setItem(i, j, QTableWidgetItem(str(value)))
 
-# 판매 화면 창
+# 판매화면창
 class HistoryWindow(QDialog, QWidget):
     def __init__(self):
         super(HistoryWindow, self).__init__()
