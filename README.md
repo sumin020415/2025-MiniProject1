@@ -19,10 +19,11 @@
 1. 아이디어 구상 및 일정체크
 
 2. 요구사항서 작성
-   <img src="./image/요구사항서.jpg" width="500">
+<img src="./image/요구사항서.jpg" width="500">
 
 3. DataBase 구조 설계
-   <img src="./image/DB 구조.jpg" width="500">
+<img src="./image/DB 구조.jpg" width="500">
+
 4. 요구사항 정의
    - 메인 화면 : 로그인
      - 아이디, 비밀번호가 일치하는 경우에만 로그인
@@ -74,8 +75,8 @@
 
 #### 데이터 시각화
 
- <img src="./image/데이터시각화.jpg" width="500">
+<img src="./image/데이터시각화.jpg" width="500">
 
 #### 판매 예측 시각화
 
- <img src="./image/판매예측.jpg" width="500">
+<img src="./image/판매예측.jpg" width="500">
