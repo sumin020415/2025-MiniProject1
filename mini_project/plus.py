@@ -9,11 +9,9 @@ from prod import prodname
 
 #DB연결
 sid_m = 'XE'
-# host_m = '210.119.14.67'
-host_m = 'localhost'
+host_m = '210.119.14.67'
 port_m = 1521
-# username_m = 'MINIPRO'
-username_m = 'system'
+username_m = 'MINIPRO'
 password_m = '12345'
 basic_msg = '편의점 물품 관리 시스템 v 1.0'
 main_id = ['sumin0759@gmail.com','dongho7736@gmail.com','a']
@@ -37,7 +35,7 @@ class MainWindow(QMainWindow):
         self.initUI()
 
     def initUI(self):
-        uic.loadUi('./mini_pro1/main.ui',self)
+        c.loadUi('./mini_pro1/main.ui',self)ui
         self.setWindowTitle('로그인')
         self.btn_login.clicked.connect(self.btn_login_click)
         self.input_pwd.returnPressed.connect(self.btn_login_click)
@@ -282,7 +280,7 @@ class ProdSubWindow(QDialog,QWidget):
             cursor = conn.cursor()
             query = '''
             SELECT *
-            FROM MINIPRO.DELIVERY
+            FROM MINIPRO.DELIVERY4
             '''
             cursor.execute(query)
             delivery = cursor.fetchall()  
@@ -299,7 +297,7 @@ class ProdSubWindow(QDialog,QWidget):
             cursor = conn.cursor()
             query = '''
             SELECT prod_name, prod_order, substr(to_char(prod_delivery, 'YYYY-MM-DD'), 1, 10), amount
-            FROM MINIPRO.DELIVERY
+            FROM MINIPRO.DELIVERY4
             WHERE PROD_DELIVERY = TO_date(:v_deliverydate , 'YYYY-MM-DD')
             '''
             cursor.execute(query, {'v_deliverydate': deliverydate})
@@ -433,7 +431,7 @@ class DeliveryWindow(QDialog,QWidget):
             cursor = conn.cursor()
             query = '''
             SELECT prod_name, prod_order, substr(to_char(prod_delivery, 'YYYY-MM-DD'),1 , 10), amount
-            FROM MINIPRO.DELIVERY
+            FROM MINIPRO.DELIVERY4
             '''
             cursor.execute(query)
             delivery = cursor.fetchall() 
@@ -454,7 +452,7 @@ class DeliveryWindow(QDialog,QWidget):
             cursor = conn.cursor()
             query = '''
             SELECT *
-                FROM MINIPRO.DELIVERY
+                FROM MINIPRO.DELIVERY4
               WHERE prod_name = :v_name 
             '''
             cursor.execute(query, {'v_name': name})
@@ -480,7 +478,7 @@ class DeliveryWindow(QDialog,QWidget):
             conn = oci.connect(f'{username_m}/{password_m}@{host_m}:{port_m}/{sid_m}')
             cursor = conn.cursor()
             query = '''
-            INSERT INTO MINIPRO.DELIVERY
+            INSERT INTO MINIPRO.DELIVERY4
               (prod_name,prod_order,prod_delivery,amount)
            VALUES (:v_prod_name,trunc(sysdate),trunc(sysdate+3),:v_amount)
             '''
@@ -488,7 +486,7 @@ class DeliveryWindow(QDialog,QWidget):
             conn.commit()  
             query = '''
             SELECT prod_name, prod_order, to_char(prod_delivery, 'YYYY-MM-DD'), amount
-            FROM MINIPRO.delivery
+            FROM MINIPRO.delivery4
             WHERE prod_name = :v_prod_name
             '''
             cursor.execute(query, {'v_prod_name': prod_name})
@@ -514,7 +512,7 @@ class DeliveryWindow(QDialog,QWidget):
             conn = oci.connect(f'{username_m}/{password_m}@{host_m}:{port_m}/{sid_m}')
             cursor = conn.cursor()
             query = '''
-            UPDATE MINIPRO.DELIVERY SET
+            UPDATE MINIPRO.DELIVERY4 SET
                   amount = :v_amount
                 , prod_order = sysdate 
                 , prod_delivery = sysdate + 3
@@ -536,7 +534,7 @@ class DeliveryWindow(QDialog,QWidget):
         try:
             conn.begin() 
             query = '''
-                    UPDATE MINIPRO.DELIVERY SET
+                    UPDATE MINIPRO.DELIVERY4 SET
                            amount = null
                         , prod_order = null
                         , prod_delivery = null
@@ -717,8 +715,3 @@ if __name__ == '__main__':
     win = MainWindow()
     win.show()
     sys.exit(app.exec_())
-
-
-
-
-
